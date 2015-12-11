@@ -1,0 +1,10 @@
+extends layouts/layout
+block content
+    section.container
+      .row
+        .col-md-4
+          form(action='/login-otp', method='post')
+            .form-group
+              label(for='inputOtp') Code
+              input#inputOtp.form-control(type='password', placeholder='6 digit code')
+            button.btn.btn-default(type='submit') Submit
