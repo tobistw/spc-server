@@ -12,6 +12,7 @@ module.exports = {
   GOOGLE_ID:        'app-id',
   GOOGLE_SECRET:    'secret',
 
+  PROJECT_NAME_CREMA: 'crema',
   PROJECT_ID_CREMA: '001',
 
   // Control debug level for modules using visionmedia/debug
