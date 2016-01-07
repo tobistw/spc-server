@@ -5,8 +5,6 @@
 module.exports = {
   // MongoDB connection options
   mongo: {
-    uri: 'mongodb://127.0.0.1:27017/webportal-dev'
-  },
-
-  seedDB: false
+    uri: 'mongodb://127.0.0.1:27017/spc-dev'
+  }
 };

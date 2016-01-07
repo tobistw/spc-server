@@ -5,12 +5,18 @@
 'use strict';
 
 var errors = require('./components/errors');
+var cors = require('cors');
 
 module.exports = function (app) {
 
   // View engine
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
+
+  /**
+   * Enabling cross domain request to allow requests from origins outside the domain.
+   */
+  app.use(cors());
 
   // Insert routes below
   app.use('/api', require('./api'));

@@ -11,4 +11,5 @@ module.exports = function () {
   winston.level = 'info';
 
   winston.info('winston log initialized');
+  winston.log('info', 'SPC Server initialized');
 };

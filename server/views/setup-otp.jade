@@ -1,9 +1,0 @@
-extends layouts/layout
-block content
-    section.container
-      .row
-        .col-md-4
-          h1 Scan this QR Code in Google Authenticator
-          img(src='' + totp.qrImg)
-          p - or enter this key manually -
-          b #{totp.key}

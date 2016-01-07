@@ -9,7 +9,7 @@ router.get('/',
   auth.isClientAuthorized,
   auth.validateAccessJwt,
   auth.errorHandlingAccessJwt,
-  auth.isAuthenticatedForProject('crema'), payloadController.getPayload);
+  auth.isAuthenticatedForProject(process.env.PROJECT_NAME_CREMA), payloadController.getPayload);
 //router.get('/entity', auth.isClientAuthorized, auth.authenticate(), userController.findByToken);
 
 

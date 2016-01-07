@@ -5,45 +5,104 @@
 
 'use strict';
 
-var Thing = require('../api/thing/thing.model');
-var User = require('../api/entity/entity.model');
+var User = require('../api/auth/model/entity/entity.model');
+var Client = require('../api/auth/model/client/client.model');
+var PublicPayload = require('../api/auth/model/public/public.model');
+var PrivatePayload = require('../api/auth/model/private/private.model');
 
-Thing.find({}).remove(function() {
-  Thing.create({
-    name : 'Development Tools',
-    info : 'Integration with popular tools such as Bower, Grunt, Karma, Mocha, JSHint, Node Inspector, Livereload, Protractor, Jade, Stylus, Sass, CoffeeScript, and Less.'
-  }, {
-    name : 'Server and Client integration',
-    info : 'Built with a powerful and fun stack: MongoDB, Express, AngularJS, and Node.'
-  }, {
-    name : 'Smart Build System',
-    info : 'Build system ignores `spec` files, allowing you to keep tests alongside code. Automatic injection of scripts and styles into your index.html'
-  },  {
-    name : 'Modular Structure',
-    info : 'Best practice client and server structures allow for more code reusability and maximum scalability'
-  },  {
-    name : 'Optimized Build',
-    info : 'Build process packs up your templates as a single JavaScript payload, minifies your scripts/css/images, and rewrites asset names for caching.'
-  },{
-    name : 'Deployment Ready',
-    info : 'Easily deploy your app to Heroku or Openshift with the heroku and openshift subgenerators'
-  });
+Client.find({}).remove(function () {
+   Client.create({
+       name: 'dashboard',
+       clientKey: '59559afbdae9e1075e68fa263057653b'
+   }, {
+       name: 'JavaTestClient',
+       clientKey: 'Ub3NZVo0OEzDAh'
+   })
+}, function () {
+    console.log('finished populating clients');
 });
 
-User.find({}).remove(function() {
-  User.create({
-    provider: 'local',
-    name: 'Test User',
-    email: 'test@test.com',
-    password: 'test'
-  }, {
-    provider: 'local',
-    role: 'admin',
-    name: 'Admin',
-    email: 'admin@admin.com',
-    password: 'admin'
-  }, function() {
-      console.log('finished populating users');
-    }
-  );
+PublicPayload.find({}).remove(function () {
+   PublicPayload.create({
+       _id: '55b88f8b52039228024ead6a',
+       fieldName1: 'Public Street 1',
+       fieldName2: 'BMW',
+       fieldName3: 'Factory 1'
+   })
+});
+
+PrivatePayload.find({}).remove(function () {
+    PrivatePayload.create({
+        user_id: '55b88f8b52039228024ead6a',
+        client_id: '59559afbdae9e1075e68fa263057653b',
+        "preferences" :
+            [
+                {
+                    "key" : "color",
+                    "value" : "red"
+                },
+                {
+                    "key" : "accesslevel",
+                    "value" : 1
+                },
+                {
+                    "key" : "email",
+                    "value" : "max.mustermann@bmw.de"
+                }
+            ]
+    })
+}, function () {
+    console.log('finished populating payload');
+});
+
+User.find({}).remove(function () {
+    User.create({
+            provider: 'spc',
+            _id: '55b88f8b52039228024ead6a',
+            name: 'Fake Admin',
+            email: 'test@admin.com',
+            password: 'password',
+            secondFactor: 'false',
+            membership: ['crema', 'fips'],
+            roles: ['guest', 'user', 'admin']
+        }, {
+            provider: 'spc',
+            name: 'Fake User',
+            email: 'test@test.com',
+            password: 'password',
+            secondFactor: 'true',
+            membership: ['crema'],
+            roles: ['guest', 'user']
+        },
+        {
+            provider: 'google',
+            name: 'Fake Google',
+            email: 'spc.ascora@gmail.com',
+            password: 'password',
+            secondFactor: 'false',
+            membership: ['crema'],
+            roles: ['guest', 'user']
+        },
+        {
+            provider: 'ldap',
+            name: 'riemann',
+            email: 'riemann@ldap.forumsys.com',
+            password: 'password',
+            secondFactor: 'false',
+            membership: ['crema'],
+            roles: ['guest', 'user']
+        },
+        {
+            provider: 'spc',
+            _id: '5655760828e5262c1e483bca',
+            name: 'JavaUser',
+            email: 'test@java.com',
+            password: 'password',
+            secondFactor: 'false',
+            membership: ['crema'],
+            roles: ['guest', 'user']
+        }, function () {
+            console.log('finished populating users');
+        }
+    );
 });

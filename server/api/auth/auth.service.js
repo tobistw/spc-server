@@ -101,7 +101,7 @@ exports.loginGoogleCb = function (req, res, next) {
     user.refresh_token = tokens.refreshToken;
 
     res.writeHead(302, {
-      'Location': 'http://localhost:9000/google/callback?access_token=' + user.access_token +
+      'Location': process.env.GOOGLE_CALLBACK_CLIENT + '?access_token=' + user.access_token +
       "&refresh_token=" + user.refresh_token
     });
     res.end();
