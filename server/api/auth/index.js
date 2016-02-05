@@ -14,7 +14,7 @@ var router = express.Router();
 // only call that should be made without API key
 //router.post('/register', auth.register);
 
-router.post('/login', audit.logLogin, auth.login, otp.loginOtp);
+router.post('/login', audit.logLogin, auth.isClientAuthorized, auth.login, otp.loginOtp);
 
 router.get('/authenticate', audit.logAuthenticate,
   auth.isClientAuthorized,
@@ -26,7 +26,7 @@ router.get('/token', audit.logAuthenticate,
   auth.isClientAuthorized,
   auth.getToken());
 
-router.get('/token/:id', audit.logLogin, auth.isClientAuthorized, auth.getTokensForId);
+router.get('/token/:id', audit.logAuthenticate, auth.isClientAuthorized, auth.getTokensForId);
 
 router.post('/register', audit.logRegister, auth.register);
 

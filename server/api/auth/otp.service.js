@@ -14,7 +14,7 @@ var Decoder = require('string_decoder').StringDecoder,
 
 exports.setup = function (req, res) {
     var urlParams = url.parse(req.url, true);
-    if (!urlParams.query.userId) return res.json(404);
+    if (!urlParams.query.userId) return res.status(404).send("No Parameters Found");
     var user = urlParams.query;
 
     var key = utils.randomKey(10);
@@ -26,7 +26,7 @@ exports.setup = function (req, res) {
     var qrImage = 'https://chart.googleapis.com/chart?chs=166x166&chld=L|0&cht=qr&chl=' + encodeURIComponent(otpUrl);
 
     TotpKey.findOne({userId: user.userId}, function (err, totp) {
-        if (err) return res.json(404, err);
+        if (err) return res.json(401, err);
         if (!totp) {
             var totpKey = new TotpKey({
                 userId: urlParams.query.userId,
@@ -34,7 +34,7 @@ exports.setup = function (req, res) {
                 period: 30
             });
             totpKey.save(function (err) {
-                if (err) return res.json(404, err);
+                if (err) return res.json(500, err);
             });
         }
     });
@@ -113,7 +113,7 @@ exports.loginOtp = function (req, res, next) {
         if (!result && user.provider === "google") {
             //todo: sensitive information: encode at least base64
             res.writeHead(302, {
-                'Location': 'http://localhost:9000/google/callback?secondFactor=true&setupOtp=true' +
+                'Location': process.env.GOOGLE_CALLBACK_CLIENT + '?secondFactor=true&setupOtp=true' +
                 '&email=' + user.email + '&_id=' + user._id + '&name=' + user.name + '&roles=' + user.roles
             });
             res.end();
@@ -121,7 +121,7 @@ exports.loginOtp = function (req, res, next) {
         else if (result && user.provider === "google") {
             //todo: sensitive information: encode at least base64
             res.writeHead(302, {
-                'Location': 'http://localhost:9000/google/callback?secondFactor=true' +
+                'Location': process.env.GOOGLE_CALLBACK_CLIENT + '?secondFactor=true' +
                 '&email=' + user.email + '&_id=' + user._id + '&name=' + user.name + '&roles=' + user.roles
             });
             res.end();

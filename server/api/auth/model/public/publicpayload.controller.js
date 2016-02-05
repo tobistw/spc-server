@@ -11,6 +11,9 @@ exports.show = function (req, res) {
     }
 
     console.log("publicpayload.controller.js show", "Public data ", publicData);
+    if (publicData == null) {
+      return res.statusCode(404);
+    }
     return res.json(200, publicData);
   });
 };
@@ -26,7 +29,7 @@ exports.create = function (req, res) {
     // Create new public data for user id and save
     if (publicdata) {
       console.log("publicpayload.controller.js create", "Public data already exists");
-      return res.send(409, "Public data already exists");
+      return res.send(422, "Public data already exists");
     }
     var value1 = req.body.fieldName1;
     var value2 = req.body.fieldName2;

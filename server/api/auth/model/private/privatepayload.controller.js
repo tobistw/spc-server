@@ -29,7 +29,7 @@ exports.create = function (req, res) {
   var queryFindPrivateData = queryDataForClient(userId, clientId);
 
   if (typeof data.preferences === "undefined") {
-    return res.send(400, "no preferences for Private Data")
+    return res.send(422, "no preferences for Private Data")
   }
 
   queryFindPrivateData.exec(function (err, privateData) {
@@ -67,7 +67,7 @@ exports.update = function (req, res) {
   var queryDataField = queryPrivateDataPreferences(userId, clientId);
 
   if (typeof data === "undefined") {
-    return res.send(404, "no preferences for Private Data to update")
+    return res.send(422, "no preferences for Private Data to update")
   }
 
   queryDataField.exec(function (err, result) {
