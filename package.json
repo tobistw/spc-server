@@ -30,6 +30,7 @@
     "request": "^2.53.0",
     "serve-favicon": "~2.0.1",
     "thirty-two": "0.0.2",
+    "uuid-key-generator": "^0.1.2",
     "winston": "^1.0.0"
   },
   "devDependencies": {
