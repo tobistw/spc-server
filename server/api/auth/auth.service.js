@@ -166,7 +166,7 @@ exports.register = function (req, res) {
           "type": "required"
         }
       }
-    }
+    };
     return res.json(422, answer);
   }
 
@@ -259,7 +259,11 @@ exports.getToken = function () {
         RefreshToken.findOne({value: token}, function (err, result) {
           if (err) {
             return handleError(err, res);
-          } else {
+          }
+          if (!result) {
+            return res.status(401).send("Unauthorised Request");
+          }
+          else {
             console.log("server auth.service.js getToken", "refresh_token found", result);
             req.userId = result.userId;
             next();
@@ -275,7 +279,7 @@ exports.getToken = function () {
           return handleError(err, res);
         }
         if (!result) {
-          return res.json(401, {meassage: 'no access token found for id'});
+          return res.json(404, {meassage: 'no access token found for id'});
         }
           console.log("server auth.service.js getToken", "access_token found", result);
           req.access_token = result.value;
@@ -295,7 +299,7 @@ exports.getToken = function () {
           AccessToken.findOne({userId: profile.id}, function (err, result) {
             if (err) handleError(res, err);
             if (!result) {
-              return res.json(401, {meassage: 'no access token found for id'});
+              return res.json(404, {meassage: 'no access token found for id'});
             } else {
               result.value = accessToken;
               result.save();
@@ -329,7 +333,7 @@ exports.getTokensForId = function (req, res) {
     Entity.findById( id , function(err, entity) {
       if (err) { return handleError(res, err); }
       if (!entity) {
-        return res.json(401, {message: 'no entity found for this id'});
+        return res.json(404, {message: 'no entity found for this id'});
       }
       var profile = {
         id: entity._id
