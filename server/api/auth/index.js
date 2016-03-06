@@ -26,6 +26,10 @@ router.get('/token', audit.logAuthenticate,
   auth.isClientAuthorized,
   auth.getToken());
 
+router.delete('/token', audit.logAuthenticate,
+    auth.isClientAuthorized,
+    auth.deleteToken);
+
 router.get('/token/:id', audit.logAuthenticate, auth.isClientAuthorized, auth.getTokensForId);
 
 router.post('/register', audit.logRegister, auth.register);

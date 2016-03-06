@@ -154,21 +154,27 @@ module.exports = function (grunt) {
       ]
     },
 
-    mochaTest: {
-      options: {
-        reporter: 'spec'
-      },
-      src: ['server/**/*.spec.js', 'server/tests/testApi.js']
-    },
-
     env: {
       test: {
-        NODE_ENV: 'test'
+        NODE_ENV: 'test',
+        SESSION_SECRET: 'test',
+        GOOGLE_ID: 'app-id',
+        GOOGLE_SECRET: 'secret',
+        GOOGLE_CALLBACK_CLIENT: 'http://localhost:8080/google/callback',
+        PROJECT_NAME_CREMA: 'crema',
+        PROJECT_ID_CREMA: '001'
       },
       prod: {
         NODE_ENV: 'production'
       },
       all: localConfig
+    },
+
+    mochaTest: {
+      options: {
+        reporter: 'spec'
+      },
+      src: ['server/**/*.spec.js', 'server/tests/testApi.js']
     }
   });
 
